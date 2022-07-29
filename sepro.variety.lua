@@ -1,9 +1,9 @@
 script_name = "Variety Effects"
 script_description = "Various macros useful when subbing variety shows"
-script_version = '1.0.0'
+script_version = '1.0.1'
 script_author = "serpo"
 
-SubInspector = require("SubInspector.Inspector")
+has_subinspector, SubInspector = pcall(require, "SubInspector.Inspector")
 require("karaskel")
 
 function fade_in(subs, sel)
@@ -147,10 +147,13 @@ function apply_gradient(subs, sel)
     local left, top, right, bottom = line.text:match("\\clip%(([%d%.%-]*),([%d%.%-]*),([%d%.%-]*),([%d%.%-]*)%)")
     if left then
         bounds = {tonumber(left), tonumber(top), tonumber(right), tonumber(bottom)}
-    else
+    elseif has_subinspector then
         assi, msg = SubInspector(subs)
         boundings, times = assi:getBounds({line})
         bounds = {boundings[1].x, boundings[1].y, boundings[1].x + boundings[1].w, boundings[1].y + boundings[1].h}
+    else
+        error("No clip given and SubInspector not installed")
+        return
     end
     if bounds[1] > bounds[3] then
         tmp = bounds[1]
