@@ -1,0 +1,60 @@
+name: "Release Update"
+
+on:
+  workflow_dispatch:
+    inputs:
+      automationType:
+        description: "Type of Automation"
+        required: true
+        default: "macros"
+        type: choice
+        options:
+          - macros
+          - modules
+      namespace:
+        description: "Namespace"
+        required: true
+        type: string
+      changelog:
+        description: 'Changelog (use \n for line breaks)'
+        required: false
+        type: string
+      devbranch:
+        description: "Branch to pull from"
+        required: true
+        default: "dev"
+        type: string
+
+jobs:
+  depctrl-feed:
+    name: "Update DependencyControl Feed"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - run: pip install packaging
+      - name: "Pull updated script"
+        run: git checkout refs/remotes/origin/${{ inputs.devbranch }} "${{ inputs.automationType }}/${{ inputs.namespace }}.*"
+      - name: "Build DependencyControl Feed"
+        run: python .github/workflows/buildFeed.py
+        env:
+          FEED_NAME: ${{ github.event.repository.name }}
+          FEED_DESCRIPTION: ${{ github.event.repository.description }}
+          FEED_MAINTAINER: ${{ github.repository_owner}}
+          REPO_URL: ${{ github.event.repository.html_url }}
+          REPO_PATH: ${{ github.repository }}
+          REPO_BRANCH: ${{ github.event.repository.default_branch }}
+          AUTOMATION_TYPE: ${{ inputs.automationType }}
+          AUTOMATION_NAMESPACE: ${{ inputs.namespace }}
+          AUTOMATION_CHANGELOG: ${{ inputs.changelog }}
+      - name: "Commit Changes"
+        run: |
+          git config user.name "DepCtrl Updater"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add DependencyControl.json
+          git commit -am "Bump version of ${{ inputs.namespace }}"
+          git push
