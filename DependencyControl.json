@@ -7,7 +7,35 @@
     "url": "@{baseUrl}",
     "fileBaseUrl": "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/@{channel}/",
     "knownFeeds": {},
-    "macros": {},
+    "macros": {
+        "sepro.advancedStyles": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}/macros/",
+            "channels": {
+                "main": {
+                    "default": true,
+                    "version": "1.0.0",
+                    "released": "2022-08-02",
+                    "files": [
+                        {
+                            "name": "sepro.advancedStyles.lua",
+                            "url": "@{fileBaseUrl}@{fileName}",
+                            "sha1": "fdd2c4d601c0335c4f5c0979a2779422952987ff"
+                        }
+                    ]
+                }
+            },
+            "changelog": {
+                "1.0.0": [
+                    "Initial version"
+                ]
+            },
+            "requiredModules": [],
+            "name": "Advanced Styles",
+            "description": "Alows saving and applying of advanced styles",
+            "author": "sepro"
+        }
+    },
     "modules": {
         "sepro.color": {
             "url": "@{baseUrl}#@{namespace}",
