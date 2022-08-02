@@ -1,0 +1,40 @@
+{
+    "dependencyControlFeedFormatVersion": "0.3.0",
+    "name": "sepros-aegisub-scripts",
+    "description": "Bad scripts you probably shouldn't use",
+    "maintainer": "seproDev",
+    "baseUrl": "https://github.com/seproDev/sepros-aegisub-scripts",
+    "url": "@{baseUrl}",
+    "fileBaseUrl": "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/@{channel}/",
+    "knownFeeds": {},
+    "macros": {},
+    "modules": {
+        "sepro.color": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}/modules/",
+            "channels": {
+                "main": {
+                    "default": true,
+                    "version": "1.0.0",
+                    "released": "2022-08-02",
+                    "files": [
+                        {
+                            "name": "sepro.color.lua",
+                            "url": "@{fileBaseUrl}@{fileName}",
+                            "sha1": "43cc55ac37ceb78e3a9347f64fb3461a959078d1"
+                        }
+                    ]
+                }
+            },
+            "changelog": {
+                "1.0.0": [
+                    "Initial version"
+                ]
+            },
+            "requiredModules": [],
+            "name": "libColor",
+            "description": "Bunch of color related functions",
+            "author": "Sepro"
+        }
+    }
+}
