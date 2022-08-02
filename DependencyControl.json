@@ -61,6 +61,33 @@
             "name": "QuickFade",
             "description": "Functions for fading in and out of the current frame",
             "author": "sepro"
+        },
+        "sepro.gradient": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}/macros/",
+            "channels": {
+                "main": {
+                    "default": true,
+                    "version": "1.0.0",
+                    "released": "2022-08-02",
+                    "files": [
+                        {
+                            "name": "sepro.gradient.lua",
+                            "url": "@{fileBaseUrl}@{fileName}",
+                            "sha1": "ab012befb70f48bbd77f6d3efe18aec84bb7bc7c"
+                        }
+                    ]
+                }
+            },
+            "changelog": {
+                "1.0.0": [
+                    "Initial version"
+                ]
+            },
+            "requiredModules": [],
+            "name": "QuickGradient",
+            "description": "Applies vertical gradient based on 1c and 2c",
+            "author": "sepro"
         }
     },
     "modules": {
