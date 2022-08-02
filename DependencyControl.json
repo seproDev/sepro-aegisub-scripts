@@ -2,11 +2,13 @@
     "dependencyControlFeedFormatVersion": "0.3.0",
     "name": "sepros-aegisub-scripts",
     "description": "Bad scripts you probably shouldn't use",
-    "maintainer": "seproDev",
+    "maintainer": "sepro",
     "baseUrl": "https://github.com/seproDev/sepros-aegisub-scripts",
     "url": "@{baseUrl}",
     "fileBaseUrl": "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/@{channel}/",
-    "knownFeeds": {},
+    "knownFeeds": {
+        "SubInspector": "https://raw.githubusercontent.com/TypesettingTools/SubInspector/master/DependencyControl.json"
+    },
     "macros": {
         "sepro.advancedStyles": {
             "url": "@{baseUrl}#@{namespace}",
@@ -84,7 +86,20 @@
                     "Initial version"
                 ]
             },
-            "requiredModules": [],
+            "requiredModules": [
+                {
+                    "moduleName": "SubInspector.Inspector",
+                    "name": "SubInspector",
+                    "url": "https://github.com/TypesettingTools/SubInspector",
+                    "version": "0.7.2",
+                    "feed": "@{feed:SubInspector}"
+                },
+                {
+                    "moduleName": "sepro.color",
+                    "url": "https://github.com/seproDev/sepros-aegisub-scripts",
+                    "version": "1.0.0"
+                }
+            ],
             "name": "QuickGradient",
             "description": "Applies vertical gradient based on 1c and 2c",
             "author": "sepro"
