@@ -112,13 +112,13 @@
             "channels": {
                 "main": {
                     "default": true,
-                    "version": "1.0.0",
-                    "released": "2022-08-02",
+                    "version": "1.0.1",
+                    "released": "2022-08-03",
                     "files": [
                         {
-                            "name": "sepro.color.lua",
-                            "url": "@{fileBaseUrl}@{fileName}",
-                            "sha1": "43cc55ac37ceb78e3a9347f64fb3461a959078d1"
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro/color@{fileName}",
+                            "sha1": "342ec40ed2a65abae9e02b5a1964f3e7c1f38ccd"
                         }
                     ]
                 }
@@ -131,7 +131,7 @@
             "requiredModules": [],
             "name": "libColor",
             "description": "Bunch of color related functions",
-            "author": "Sepro"
+            "author": "sepro"
         }
     }
 }
