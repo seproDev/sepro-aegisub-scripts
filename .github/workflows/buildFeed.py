@@ -37,9 +37,14 @@ def main():
         dev_branch = os.environ.get("DEV_REF").rsplit("/", 1)[1]
         print(f"Updating entire dev branch from {dev_branch}")
         for type in ["macros", "modules"]:
-            files = list(pathlib.Path(type).glob("**.lua")) + list(pathlib.Path(type).glob("**.moon"))
+            files = list(pathlib.Path(type).glob("**/*.lua")) + list(pathlib.Path(type).glob("**/*.moon"))
             for file in files:
-                namespace = os.path.basename(file).rsplit(".", 1)[0]
+                if type == "macros":
+                    namespace = os.path.basename(file).rsplit(".", 1)[0]
+                else:
+                    segment = str(file).split("modules/", 1)
+                    actual_path = segment[0] + "modules/" + segment[1].replace('/', '.')
+                    namespace = os.path.basename(actual_path).rsplit(".", 1)[0]
                 print(f"Updating {type}/{namespace}")
                 feed = update_automation(
                     file,
@@ -165,16 +170,18 @@ def update_automation(location, type, namespace, changelog, branch, feed):
 
     automation["channels"][branch]["version"] = script_version
     automation["channels"][branch]["released"] = current_date
+    
+    # For some reason DepCtrl require the filename to be .lua or .moon otherwise the name of the saved file is messed up
     if type == "modules":
         expanded_path = namespace.replace(".", "/").rsplit("/", 1)[0] + "/" + file_name.rsplit(".", 1)[0]
-        # For some reason modules require the filename to be .lua or .moon
-        file_name = "." + file_name.rsplit(".", 1)[1]
-    else:
-        expanded_path = ""
+    else: 
+        expanded_path = file_name.rsplit(".", 1)[0]
+    extension = "." + file_name.rsplit(".", 1)[1]
+
 
     automation["channels"][branch]["files"] = [
         {
-            "name": file_name,
+            "name": extension,
             "url": f"@{{fileBaseUrl}}{expanded_path}@{{fileName}}",
             "sha1": file_hash,
         }

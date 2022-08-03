@@ -19,10 +19,11 @@ jobs:
           python-version: '3.x'
       - run: pip install packaging
       - name: "Pull updated script"
+        continue-on-error: true
         run: |
           DEV_REV=$(echo "${{ github.event.ref }}" | sed 's/refs\/heads/refs\/remotes\/origin/g')
-          git checkout $DEV_REV "**.moon"
-          git checkout $DEV_REV "**.lua"
+          git restore --source $DEV_REV -- "**.moon" || true
+          git restore --source $DEV_REV -- "**.lua" || true
       - name: "Build DependencyControl Feed"
         run: python .github/workflows/buildFeed.py
         env:
