@@ -149,7 +149,7 @@ def update_automation(location, type, namespace, changelog, branch, feed):
         print("Automation not present in feed. Adding it.")
         automation = {
             "url": "@{baseUrl}#@{namespace}",
-            "fileBaseUrl": f"@{{fileBaseUrl}}/{type}/",
+            "fileBaseUrl": f"@{{fileBaseUrl}}{type}/",
             "channels": {branch: {}},
             "changelog": {},
             "requiredModules": [],
@@ -166,7 +166,9 @@ def update_automation(location, type, namespace, changelog, branch, feed):
     automation["channels"][branch]["version"] = script_version
     automation["channels"][branch]["released"] = current_date
     if type == "modules":
-        expanded_path = namespace.replace(".", "/").rsplit("/", 1)[0] + "/"
+        expanded_path = namespace.replace(".", "/").rsplit("/", 1)[0] + "/" + file_name.rsplit(".", 1)[0]
+        # For some reason modules require the filename to be .lua or .moon
+        file_name = "." + file_name.rsplit(".", 1)[1]
     else:
         expanded_path = ""
 
@@ -178,7 +180,7 @@ def update_automation(location, type, namespace, changelog, branch, feed):
         }
     ]
 
-    if changelog != None:
+    if changelog != None and changelog != "":
         automation["changelog"][script_version] = changelog.split("\\n")
 
     return feed

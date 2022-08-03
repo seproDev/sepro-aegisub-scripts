@@ -38,7 +38,9 @@ jobs:
           python-version: '3.x'
       - run: pip install packaging
       - name: "Pull updated script"
-        run: git checkout refs/remotes/origin/${{ inputs.devbranch }} "${{ inputs.automationType }}/${{ inputs.namespace }}.*"
+        run: |
+          if ${{ inputs.automationType == 'macros' }} ; then PROTO_PATH="${{ inputs.namespace }}"; else PROTO_PATH="$(echo "${{ inputs.namespace }}" | sed 's/\./\//g')"; fi
+          git checkout refs/remotes/origin/${{ inputs.devbranch }} "${{ inputs.automationType }}/$PROTO_PATH.*"
       - name: "Build DependencyControl Feed"
         run: python .github/workflows/buildFeed.py
         env:
