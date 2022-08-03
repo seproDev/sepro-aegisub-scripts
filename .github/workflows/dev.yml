@@ -1,0 +1,42 @@
+name: "Update dev branch"
+
+on:
+  push:
+    branches:
+    - dev
+
+jobs:
+  depctrl-feed:
+    name: "Update DependencyControl Feed"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - run: pip install packaging
+      - name: "Pull updated script"
+        run: |
+          DEV_REV=$(echo "${{ github.event.ref }}" | sed 's/refs\/heads/refs\/remotes\/origin/g')
+          git checkout $DEV_REV "**.moon"
+          git checkout $DEV_REV "**.lua"
+      - name: "Build DependencyControl Feed"
+        run: python .github/workflows/buildFeed.py
+        env:
+          FEED_NAME: ${{ github.event.repository.name }}
+          FEED_DESCRIPTION: ${{ github.event.repository.description }}
+          FEED_MAINTAINER: ${{ github.repository_owner}}
+          REPO_URL: ${{ github.event.repository.html_url }}
+          REPO_PATH: ${{ github.repository }}
+          REPO_BRANCH: ${{ github.event.repository.default_branch }}
+          DEV_REF: ${{ github.event.ref }}
+      - name: "Commit Changes"
+        run: |
+          git config user.name "DepCtrl Updater"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add DependencyControl.json
+          git commit -m "Update dev branch entries"
+          git push
