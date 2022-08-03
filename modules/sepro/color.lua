@@ -3,9 +3,9 @@ local colorModule = {}
 if haveDepCtrl then
     depCtrl = DependencyControl({
         name = "libColor",
-        version = "1.0.0",
+        version = "1.0.1",
         description = "Bunch of color related functions",
-        author = "Sepro",
+        author = "sepro",
         url = "https://github.com/seproDev/sepros-aegisub-scripts",
         feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json",
         moduleName = "sepro.color"
