@@ -1,6 +1,6 @@
 script_name = "QuickGradient"
 script_description = "Applies vertical gradient based on 1c and 2c"
-script_version = '1.0.0'
+script_version = '1.0.1'
 script_author = "sepro"
 script_namespace = "sepro.gradient"
 
@@ -157,6 +157,13 @@ function apply_gradient(subs, sel)
         elseif haveSubInsp then
             local assi, msg = SubInspector(subs)
             local boundings, times = assi:getBounds({line})
+            if boundings[1] == false then
+				boundings, times = assi:getBounds({line}, {line.start_time + 10})
+				if boundings[1] == false then
+					showError("Couldn't get bounding box")
+					return
+				end
+            end
             bounds = {boundings[1].x, boundings[1].y, boundings[1].x + boundings[1].w, boundings[1].y + boundings[1].h}
         else
             showError("No clip given and SubInspector not installed")
