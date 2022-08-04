@@ -25,6 +25,18 @@
                             "sha1": "ab012befb70f48bbd77f6d3efe18aec84bb7bc7c"
                         }
                     ]
+                },
+                "dev": {
+                    "default": false,
+                    "version": "1.0.0",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.gradient@{fileName}",
+                            "sha1": "ab012befb70f48bbd77f6d3efe18aec84bb7bc7c"
+                        }
+                    ]
                 }
             },
             "changelog": {
@@ -65,6 +77,18 @@
                             "sha1": "5ae9c474fd717a0ad5cad949be78086686bda82c"
                         }
                     ]
+                },
+                "dev": {
+                    "default": false,
+                    "version": "1.0.0",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.fade@{fileName}",
+                            "sha1": "5ae9c474fd717a0ad5cad949be78086686bda82c"
+                        }
+                    ]
                 }
             },
             "changelog": {
@@ -83,6 +107,18 @@
             "channels": {
                 "main": {
                     "default": true,
+                    "version": "1.0.0",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.advancedStyles@{fileName}",
+                            "sha1": "fdd2c4d601c0335c4f5c0979a2779422952987ff"
+                        }
+                    ]
+                },
+                "dev": {
+                    "default": false,
                     "version": "1.0.0",
                     "released": "2022-08-04",
                     "files": [
@@ -112,6 +148,18 @@
             "channels": {
                 "main": {
                     "default": true,
+                    "version": "1.0.1",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro/color@{fileName}",
+                            "sha1": "342ec40ed2a65abae9e02b5a1964f3e7c1f38ccd"
+                        }
+                    ]
+                },
+                "dev": {
+                    "default": false,
                     "version": "1.0.1",
                     "released": "2022-08-04",
                     "files": [
