@@ -61,6 +61,33 @@
             "name": "QuickFade",
             "description": "Functions for fading in and out of the current frame",
             "author": "sepro"
+        },
+        "sepro.advancedStyles": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}macros/",
+            "channels": {
+                "main": {
+                    "default": true,
+                    "version": "1.0.0",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.advancedStyles@{fileName}",
+                            "sha1": "fdd2c4d601c0335c4f5c0979a2779422952987ff"
+                        }
+                    ]
+                }
+            },
+            "changelog": {
+                "1.0.0": [
+                    "Initial release"
+                ]
+            },
+            "requiredModules": [],
+            "name": "Advanced Styles",
+            "description": "Alows saving and applying of advanced styles",
+            "author": "sepro"
         }
     },
     "modules": {}
