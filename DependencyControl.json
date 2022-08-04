@@ -34,6 +34,33 @@
             "name": "QuickGradient",
             "description": "Applies vertical gradient based on 1c and 2c",
             "author": "sepro"
+        },
+        "sepro.fade": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}macros/",
+            "channels": {
+                "main": {
+                    "default": true,
+                    "version": "1.0.0",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.fade@{fileName}",
+                            "sha1": "5ae9c474fd717a0ad5cad949be78086686bda82c"
+                        }
+                    ]
+                }
+            },
+            "changelog": {
+                "1.0.0": [
+                    "Initial release"
+                ]
+            },
+            "requiredModules": [],
+            "name": "QuickFade",
+            "description": "Functions for fading in and out of the current frame",
+            "author": "sepro"
         }
     },
     "modules": {}
