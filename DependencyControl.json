@@ -90,5 +90,33 @@
             "author": "sepro"
         }
     },
-    "modules": {}
+    "modules": {
+        "sepro.color": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}modules/",
+            "channels": {
+                "main": {
+                    "default": true,
+                    "version": "1.0.1",
+                    "released": "2022-08-04",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro/color@{fileName}",
+                            "sha1": "342ec40ed2a65abae9e02b5a1964f3e7c1f38ccd"
+                        }
+                    ]
+                }
+            },
+            "changelog": {
+                "1.0.1": [
+                    "Initial release"
+                ]
+            },
+            "requiredModules": [],
+            "name": "libColor",
+            "description": "Bunch of color related functions",
+            "author": "sepro"
+        }
+    }
 }
