@@ -28,13 +28,13 @@
                 },
                 "dev": {
                     "default": false,
-                    "version": "1.0.0",
+                    "version": "1.0.1",
                     "released": "2022-08-04",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.gradient@{fileName}",
-                            "sha1": "ab012befb70f48bbd77f6d3efe18aec84bb7bc7c"
+                            "sha1": "40ddcbd9c9c41ae0d383560efefd90fdf3e4ae4a"
                         }
                     ]
                 }
