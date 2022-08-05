@@ -1,14 +1,16 @@
 script_name = "Advanced Styles"
 script_description = "Alows saving and applying of advanced styles"
-script_version = '1.0.1'
+script_version = "1.0.1"
 script_author = "sepro"
 script_namespace = "sepro.advancedStyles"
 
 local DependencyControl = require("l0.DependencyControl")
 
 local depCtrl = DependencyControl {
-    feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json"
+    feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json",
+    {"aegisub.util"}
 }
+local util = depCtrl:requireModules()
 
 local advancedStyles = depCtrl:getConfigHandler({}, "advancedStyles")
 
