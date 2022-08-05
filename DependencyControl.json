@@ -128,7 +128,7 @@
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.advancedStyles@{fileName}",
-                            "sha1": "9e28cb7323075a12068913bf326245dde01d7f89"
+                            "sha1": "552fd5a76436a7064f4cfec3188a39804516196d"
                         }
                     ]
                 }
