@@ -1,6 +1,6 @@
 script_name = "Advanced Styles"
 script_description = "Alows saving and applying of advanced styles"
-script_version = '1.0.0'
+script_version = '1.0.1'
 script_author = "sepro"
 script_namespace = "sepro.advancedStyles"
 
@@ -187,10 +187,6 @@ function save_advanced_style(subs, sel)
 end
 
 function apply_advanced_style(subs, sel)
-    if not haveDepCtrl then
-        showError("DependencyControl required for this function")
-        return
-    end
     local curIt = 1
     for _, i in ipairs(sel) do
         local line = subs[i]
