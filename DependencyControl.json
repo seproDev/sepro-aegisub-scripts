@@ -110,13 +110,13 @@
             "channels": {
                 "main": {
                     "default": true,
-                    "version": "1.0.0",
-                    "released": "2022-08-04",
+                    "version": "1.1.0",
+                    "released": "2022-08-05",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.advancedStyles@{fileName}",
-                            "sha1": "fdd2c4d601c0335c4f5c0979a2779422952987ff"
+                            "sha1": "a763562770807af6296f396aa6daf83662d02b01"
                         }
                     ]
                 },
@@ -136,6 +136,9 @@
             "changelog": {
                 "1.0.0": [
                     "Initial release"
+                ],
+                "1.1.0": [
+                    "Added move supoprt"
                 ]
             },
             "requiredModules": [],

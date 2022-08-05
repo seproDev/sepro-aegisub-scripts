@@ -1,14 +1,16 @@
 script_name = "Advanced Styles"
 script_description = "Alows saving and applying of advanced styles"
-script_version = '1.0.0'
+script_version = "1.1.0"
 script_author = "sepro"
 script_namespace = "sepro.advancedStyles"
 
 local DependencyControl = require("l0.DependencyControl")
 
 local depCtrl = DependencyControl {
-    feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json"
+    feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json",
+    {"aegisub.util"}
 }
+local util = depCtrl:requireModules()
 
 local advancedStyles = depCtrl:getConfigHandler({}, "advancedStyles")
 
@@ -26,6 +28,9 @@ end
 
 -- from unanimated. Should probably be rewritten
 local function setPos(subs, text, line)
+    if text:match("\\pos%([^%)]+%)") or text:match("\\move%([^%)]+%)") then
+        return text
+    end
     st = nil
     defst = nil
     for g = 1, #subs do
@@ -112,7 +117,7 @@ local function setPos(subs, text, line)
 end
 
 -- TODO: relative timing of lines
--- TODO: Move, org support
+-- TODO: org support
 -- TODO: Change timing to be frame based instead of ms?
 function save_advanced_style(subs, sel)
     -- Check if selection as same style
@@ -155,23 +160,59 @@ function save_advanced_style(subs, sel)
     -- Extract tagData
     local firstTag = subs[sel[1]].text:match("^{([^}]*)}")
     local firstX, firstY = firstTag:match("\\pos%(([%d%.%-]*),([%d%.%-]*)%)")
+    if firstX == nil or firstY == nil then
+        firstX, firstY = firstTag:match("\\move%(([%d%.%-]*),([%d%.%-]*),[^%)]+%)")
+        if firstX == nil or firstY == nil then
+            showError("Could not extract position from tag")
+            return
+        end
+    end
     local dataList = {}
     for _, i in ipairs(sel) do
         local line = subs[i]
-        -- Rewrite \pos to be relative to first line
+
         local tag = line.text:match("^{([^}]*)}")
-        local x, y = tag:match("\\pos%(([%d%.%-]*),([%d%.%-]*)%)")
-        if x == firstX then
-            x = "$x"
-        else
-            x = "!$x+" .. tostring(tonumber(x) - tonumber(firstX)) .. "!"
+        if tag:match("\\pos%([^%)]+%)") then
+            -- Rewrite \pos to be relative to first line
+            local x, y = tag:match("\\pos%(([%d%.%-]*),([%d%.%-]*)%)")
+            if x == firstX then
+                x = "$x"
+            else
+                x = "!$x+" .. tostring(tonumber(x) - tonumber(firstX)) .. "!"
+            end
+            if y == firstY then
+                y = "$y"
+            else
+                y = "!$y+" .. tostring(tonumber(y) - tonumber(firstY)) .. "!"
+            end
+            tag = tag:gsub("\\pos%([%d%.%-]*,[%d%.%-]*%)", "\\pos%(" .. x .. "," .. y .. "%)")
+        elseif tag:match("\\move%([^%)]+%)") then
+            -- Rewrite \move to be relative to first line
+            local x1, y1, x2, y2, t1, t2 = tag:match(
+                "\\move%(([%d%.%-]*),([%d%.%-]*),([%d%.%-]*),([%d%.%-]*),([%d]*),([%d]*)%)")
+            if x1 == firstX then
+                x1 = "$x"
+            else
+                x1 = "!$x+" .. tostring(tonumber(x1) - tonumber(firstX)) .. "!"
+            end
+            if x2 == firstX then
+                x2 = "$x"
+            else
+                x2 = "!$x+" .. tostring(tonumber(x2) - tonumber(firstX)) .. "!"
+            end
+            if y1 == firstY then
+                y1 = "$y"
+            else
+                y1 = "!$y+" .. tostring(tonumber(y1) - tonumber(firstY)) .. "!"
+            end
+            if y2 == firstY then
+                y2 = "$y"
+            else
+                y2 = "!$y+" .. tostring(tonumber(y2) - tonumber(firstY)) .. "!"
+            end
+            tag = tag:gsub("\\move%([%d%.%-]*,[%d%.%-]*,[%d%.%-]*,[%d%.%-]*,[%d]*,[%d]*%)",
+                "\\move%(" .. x1 .. "," .. y1 .. "," .. x2 .. "," .. y2 .. "," .. t1 .. "," .. t2 .. "%)")
         end
-        if y == firstY then
-            y = "$y"
-        else
-            y = "!$y+" .. tostring(tonumber(y) - tonumber(firstY)) .. "!"
-        end
-        tag = tag:gsub("\\pos%([%d%.%-]*,[%d%.%-]*%)", "\\pos%(" .. x .. "," .. y .. "%)")
 
         local dataObj = {}
         dataObj["tag"] = tag
@@ -187,10 +228,6 @@ function save_advanced_style(subs, sel)
 end
 
 function apply_advanced_style(subs, sel)
-    if not haveDepCtrl then
-        showError("DependencyControl required for this function")
-        return
-    end
     local curIt = 1
     for _, i in ipairs(sel) do
         local line = subs[i]
@@ -198,27 +235,40 @@ function apply_advanced_style(subs, sel)
             showError("No advanced style saved for " .. line.style)
             return
         end
-
+        if line.text:match("\\move%([^%)]+%)") then
+            showError("Cannot apply advanced style to line with move tag")
+            return
+        end
         line.text = setPos(subs, line.text, line)
         local firstX, firstY = line.text:match("\\pos%(([%d%.%-]*),([%d%.%-]*)%)")
+        if firstX == nil or firstY == nil then
+            showError("Could not extract position from tag")
+            return
+        end
         line.text = line.text:gsub("\\pos&[^\\}]+", ""):gsub("{}", "")
         -- Read data
         local dataList = advancedStyles.config[line.style]
         local linesAdded = 0
         for _, dataObj in ipairs(dataList) do
             local tag = dataObj["tag"]
-            local x, y = tag:match("\\pos%(([%d%.%-!$x+]*),([%d%.%-!$y+]*)%)")
-            x = x:gsub("$x", firstX)
-            y = y:gsub("$y", firstY)
-            if x:match("!([^!]+)!") then
-                x = loadstring('return ' .. x:match("!([^!]+)!"))()
+            -- Step 1 replae varaibles
+            tag = tag:gsub("$x", firstX)
+            tag = tag:gsub("$y", firstY)
+            -- Step 2 calculate equations
+            local count = 0
+            while tag:match("!([^!]+)!") do
+                local equation = tag:match("!([^!]+)!")
+                local solution = loadstring('return ' .. equation)()
+                local escapedEquation = equation:gsub("%]", "%%]"):gsub("%[", "%%["):gsub("%.", "%%."):gsub("%!", "%%!")
+                    :gsub("%(", "%%("):gsub("%)", "%%)"):gsub("%*", "%%*"):gsub("%+", "%%+"):gsub("%-", "%%-")
+                tag = tag:gsub("%!" .. escapedEquation .. "%!", solution)
+                count = count + 1
+                if count > 1000 then
+                    showError("Equation loop detected. Aborting.")
+                    return
+                end
             end
-            if y:match("!([^!]+)!") then
-                y = loadstring('return ' .. y:match("!([^!]+)!"))()
-            end
-
-            tag = tag:gsub("\\pos%([%d%.%-!$x+]*,[%d%.%-!$y+]*%)", "\\pos%(" .. x .. "," .. y .. "%)")
-
+            -- Step 3 create lines with tag
             local newLine = util.deep_copy(line)
             newLine.layer = dataObj["layer"]
             newLine.text = ("{" .. tag .. "}" .. newLine.text):gsub("}{", "")
