@@ -1,6 +1,6 @@
 script_name = "QuickGradient"
 script_description = "Applies vertical gradient based on 1c and 2c"
-script_version = '1.0.1'
+script_version = '1.1.0'
 script_author = "sepro"
 script_namespace = "sepro.gradient"
 
@@ -44,6 +44,9 @@ end
 
 -- from unanimated. Should probably be rewritten
 local function setPos(subs, text, line)
+    if text:match("\\pos%([^%)]+%)") or text:match("\\move%([^%)]+%)") then
+        return text
+    end
     st = nil
     defst = nil
     for g = 1, #subs do
@@ -158,11 +161,11 @@ function apply_gradient(subs, sel)
             local assi, msg = SubInspector(subs)
             local boundings, times = assi:getBounds({line})
             if boundings[1] == false then
-				boundings, times = assi:getBounds({line}, {line.start_time + 10})
-				if boundings[1] == false then
-					showError("Couldn't get bounding box")
-					return
-				end
+                boundings, times = assi:getBounds({line}, {line.start_time + 10})
+                if boundings[1] == false then
+                    showError("Couldn't get bounding box")
+                    return
+                end
             end
             bounds = {boundings[1].x, boundings[1].y, boundings[1].x + boundings[1].w, boundings[1].y + boundings[1].h}
         else
@@ -189,6 +192,10 @@ function apply_gradient(subs, sel)
         local yHeight = bounds[4] - bounds[2]
         local lineHeight = math.min(math.max(math.floor(yHeight / deltaE), 2), 15)
 
+        -- Extract potential move arguments
+        local x1, y1, x2, y2, t1, t2 = line.text:match(
+            "\\move%(([%d%.%-]*),([%d%.%-]*),([%d%.%-]*),([%d%.%-]*),([%d]*),([%d]*)%)")
+
         -- get line text without c1, c2 and clip
         local baseLine = line.text:gsub("\\c&[^\\}]+", ""):gsub("\\2c&[^\\}]+", ""):gsub("\\clip%([^%)]+%)", ""):gsub(
             "{}", "")
@@ -199,9 +206,23 @@ function apply_gradient(subs, sel)
             local progress = (y - bounds[2]) / (bounds[4] - bounds[2])
             local currentColor = util.interpolate_color(progress, c1, c2)
             local coloredLine = "{\\c" .. currentColor .. "}" .. baseLine
-            local clippedLine = "{\\clip(" .. tostring(bounds[1]) .. "," .. tostring(y) .. "," .. tostring(bounds[3]) ..
-                                    "," .. tostring(y + lineHeight) .. ")}" .. coloredLine
-            local finalLine = clippedLine:gsub("}{", "")
+
+            local clipPart
+            if x1 and y1 and x2 and y2 and t1 and t2 then
+                local xdiff = tonumber(x2) - tonumber(x1)
+                local ydiff = tonumber(y2) - tonumber(y1)
+                clipPart =
+                    "{\\clip(" .. tostring(bounds[1]) .. "," .. tostring(y) .. "," .. tostring(bounds[3]) .. "," ..
+                        tostring(y + lineHeight) .. ")\\t(" .. t1 .. ", " .. t2 .. ", \\clip(" ..
+                        tostring(bounds[1] + xdiff) .. "," .. tostring(y + ydiff) .. "," .. tostring(bounds[3] + xdiff) ..
+                        "," .. tostring(y + lineHeight + ydiff) .. "))}"
+            else
+                clipPart =
+                    "{\\clip(" .. tostring(bounds[1]) .. "," .. tostring(y) .. "," .. tostring(bounds[3]) .. "," ..
+                        tostring(y + lineHeight) .. ")}"
+            end
+
+            local finalLine = (clipPart .. coloredLine):gsub("}{", "")
             local newLine = util.deep_copy(line)
             newLine.text = finalLine
             subs.insert(i + 1, newLine)
