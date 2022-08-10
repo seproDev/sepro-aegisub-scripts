@@ -113,13 +113,13 @@
             "channels": {
                 "main": {
                     "default": true,
-                    "version": "1.1.0",
-                    "released": "2022-08-05",
+                    "version": "1.1.1",
+                    "released": "2022-08-10",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.advancedStyles@{fileName}",
-                            "sha1": "a763562770807af6296f396aa6daf83662d02b01"
+                            "sha1": "35cd15959479e36f86cb9d63295a51ac7b911bfd"
                         }
                     ]
                 },
@@ -142,6 +142,10 @@
                 ],
                 "1.1.0": [
                     "Added move supoprt"
+                ],
+                "1.1.1": [
+                    "Added relative org support",
+                    "Fixed pos removal on relative move"
                 ]
             },
             "requiredModules": [],
