@@ -1,6 +1,6 @@
 script_name = "Advanced Styles"
 script_description = "Alows saving and applying of advanced styles"
-script_version = "1.1.0"
+script_version = "1.1.1"
 script_author = "sepro"
 script_namespace = "sepro.advancedStyles"
 
@@ -117,7 +117,6 @@ local function setPos(subs, text, line)
 end
 
 -- TODO: relative timing of lines
--- TODO: org support
 -- TODO: Change timing to be frame based instead of ms?
 function save_advanced_style(subs, sel)
     -- Check if selection as same style
@@ -172,6 +171,22 @@ function save_advanced_style(subs, sel)
         local line = subs[i]
 
         local tag = line.text:match("^{([^}]*)}")
+        if tag:match("\\org%([^%)]+%)") then
+            -- Rewrite \pos to be relative to first line
+            local x, y = tag:match("\\org%(([%d%.%-]*),([%d%.%-]*)%)")
+            if x == firstX then
+                x = "$x"
+            else
+                x = "!$x+" .. tostring(tonumber(x) - tonumber(firstX)) .. "!"
+            end
+            if y == firstY then
+                y = "$y"
+            else
+                y = "!$y+" .. tostring(tonumber(y) - tonumber(firstY)) .. "!"
+            end
+            tag = tag:gsub("\\org%([%d%.%-]*,[%d%.%-]*%)", "\\org%(" .. x .. "," .. y .. "%)")
+        end
+
         if tag:match("\\pos%([^%)]+%)") then
             -- Rewrite \pos to be relative to first line
             local x, y = tag:match("\\pos%(([%d%.%-]*),([%d%.%-]*)%)")
