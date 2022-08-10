@@ -245,7 +245,7 @@ function apply_advanced_style(subs, sel)
             showError("Could not extract position from tag")
             return
         end
-        line.text = line.text:gsub("\\pos&[^\\}]+", ""):gsub("{}", "")
+        line.text = line.text:gsub("\\pos%([^%)]+%)", ""):gsub("{}", "")
         -- Read data
         local dataList = advancedStyles.config[line.style]
         local linesAdded = 0
