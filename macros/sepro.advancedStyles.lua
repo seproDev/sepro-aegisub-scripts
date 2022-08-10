@@ -1,6 +1,6 @@
 script_name = "Advanced Styles"
 script_description = "Alows saving and applying of advanced styles"
-script_version = "1.1.1"
+script_version = "1.1.2"
 script_author = "sepro"
 script_namespace = "sepro.advancedStyles"
 
@@ -116,7 +116,6 @@ local function setPos(subs, text, line)
     return text
 end
 
--- TODO: relative timing of lines
 -- TODO: Change timing to be frame based instead of ms?
 function save_advanced_style(subs, sel)
     -- Check if selection as same style
@@ -139,16 +138,9 @@ function save_advanced_style(subs, sel)
         end
     end
 
-    -- Check if selection has same start_time and end_time
+    -- Get start and end time to calculate offset of lines
     local baseStart = subs[sel[1]].start_time
     local baseEnd = subs[sel[1]].end_time
-    for _, i in ipairs(sel) do
-        local line = subs[i]
-        if line.start_time ~= baseStart or line.end_time ~= baseEnd then
-            showError("Lines with different start/end time are not yet supported")
-            return
-        end
-    end
 
     -- setPos (set \pos on all lines)
     for _, i in ipairs(sel) do
@@ -232,6 +224,8 @@ function save_advanced_style(subs, sel)
         local dataObj = {}
         dataObj["tag"] = tag
         dataObj["layer"] = line.layer
+        dataObj["start_offset"] = line.start_time - baseStart
+        dataObj["end_offset"] = line.end_time - baseEnd
         table.insert(dataList, dataObj)
     end
 
@@ -286,6 +280,8 @@ function apply_advanced_style(subs, sel)
             -- Step 3 create lines with tag
             local newLine = util.deep_copy(line)
             newLine.layer = dataObj["layer"]
+            newLine.start_time = newLine.start_time + dataObj["start_offset"]
+            newLine.end_time = newLine.end_time + dataObj["end_offset"]
             newLine.text = ("{" .. tag .. "}" .. newLine.text):gsub("}{", "")
             subs.insert(i + 1, newLine)
             linesAdded = linesAdded + 1
