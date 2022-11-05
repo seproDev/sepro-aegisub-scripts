@@ -66,6 +66,16 @@ function benchmark(subs, sel)
         local frame_time = (y - x) * 1000 / precision
         frame_times[frame_number - start_frame + 1] = frame_time
     end
+    
+    if #frame_times == 0 then
+        showError("No frames found.")
+        return sel
+    end
+    if #frame_times == 1 then
+        showMsg("Frame time: " .. frame_times[1] .. " ms")
+        return sel
+    end
+
     worst_frame_time = math.max(unpack(frame_times))
 
     average_frame_time = 0
