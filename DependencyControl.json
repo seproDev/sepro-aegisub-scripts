@@ -171,9 +171,25 @@
                             "sha1": "e6c9383365f570c22b8fbb907f60f265998bd3cc"
                         }
                     ]
+                },
+                "main": {
+                    "default": true,
+                    "version": "0.0.1",
+                    "released": "2022-11-05",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.benchmark@{fileName}",
+                            "sha1": "e6c9383365f570c22b8fbb907f60f265998bd3cc"
+                        }
+                    ]
                 }
             },
-            "changelog": {},
+            "changelog": {
+                "0.0.1": [
+                    "Initial release"
+                ]
+            },
             "requiredModules": [],
             "name": "Benchmark",
             "description": "Banchmark subtitle performance",
