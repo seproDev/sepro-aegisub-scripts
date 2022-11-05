@@ -162,13 +162,13 @@
             "channels": {
                 "dev": {
                     "default": false,
-                    "version": "0.0.1",
+                    "version": "0.0.2",
                     "released": "2022-11-05",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.benchmark@{fileName}",
-                            "sha1": "f8879c838adff6e87c5f30e27e67711ab77a585c"
+                            "sha1": "fbfb943b3b4d2ba0655461d6b0ee7c3915519cf1"
                         }
                     ]
                 },
