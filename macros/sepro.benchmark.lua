@@ -1,6 +1,6 @@
 script_name = "Benchmark"
 script_description = "Banchmark subtitle performance"
-script_version = '0.0.1'
+script_version = '0.0.2'
 script_author = "sepro"
 script_namespace = "sepro.benchmark"
 
