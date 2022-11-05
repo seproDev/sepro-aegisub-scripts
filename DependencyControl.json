@@ -29,7 +29,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.1.0",
-                    "released": "2022-08-10",
+                    "released": "2022-11-05",
                     "files": [
                         {
                             "name": ".lua",
@@ -87,7 +87,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.0.0",
-                    "released": "2022-08-10",
+                    "released": "2022-11-05",
                     "files": [
                         {
                             "name": ".lua",
@@ -126,7 +126,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.1.2",
-                    "released": "2022-08-10",
+                    "released": "2022-11-05",
                     "files": [
                         {
                             "name": ".lua",
@@ -155,6 +155,29 @@
             "name": "Advanced Styles",
             "description": "Alows saving and applying of advanced styles",
             "author": "sepro"
+        },
+        "sepro.benchmark": {
+            "url": "@{baseUrl}#@{namespace}",
+            "fileBaseUrl": "@{fileBaseUrl}macros/",
+            "channels": {
+                "dev": {
+                    "default": false,
+                    "version": "0.0.1",
+                    "released": "2022-11-05",
+                    "files": [
+                        {
+                            "name": ".lua",
+                            "url": "@{fileBaseUrl}sepro.benchmark@{fileName}",
+                            "sha1": "e6c9383365f570c22b8fbb907f60f265998bd3cc"
+                        }
+                    ]
+                }
+            },
+            "changelog": {},
+            "requiredModules": [],
+            "name": "Benchmark",
+            "description": "Banchmark subtitle performance",
+            "author": "sepro"
         }
     },
     "modules": {
@@ -177,7 +200,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.0.1",
-                    "released": "2022-08-10",
+                    "released": "2022-11-05",
                     "files": [
                         {
                             "name": ".lua",
