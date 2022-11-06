@@ -174,13 +174,13 @@
                 },
                 "main": {
                     "default": true,
-                    "version": "0.0.2",
-                    "released": "2022-11-05",
+                    "version": "0.0.3",
+                    "released": "2022-11-06",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.benchmark@{fileName}",
-                            "sha1": "fbfb943b3b4d2ba0655461d6b0ee7c3915519cf1"
+                            "sha1": "7cd3a1e04d241da4793ab90ccec63c43cc0ad6bf"
                         }
                     ]
                 }
@@ -191,6 +191,9 @@
                 ],
                 "0.0.2": [
                     "Fix error on single frame lines"
+                ],
+                "0.0.3": [
+                    "Use PreciseTimer instead of os.clock()"
                 ]
             },
             "requiredModules": [],

@@ -1,14 +1,23 @@
 script_name = "Benchmark"
 script_description = "Banchmark subtitle performance"
-script_version = '0.0.2'
+script_version = '0.0.3'
 script_author = "sepro"
 script_namespace = "sepro.benchmark"
 
 local haveDepCtrl, DependencyControl, depCtrl = pcall(require, "l0.DependencyControl")
+local preciseTimer
 if haveDepCtrl then
     depCtrl = DependencyControl {
-        feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json"
+        feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json",
+        {{
+            "PT.PreciseTimer",
+            version = "0.1.6",
+            feed = "https://raw.githubusercontent.com/TypesettingTools/ffi-experiments/master/DependencyControl.json"
+        }}
     }
+    preciseTimer = depCtrl:requireModules()
+else
+    preciseTimer = require("PT.PreciseTimer")
 end
 
 local function showMsg(msg)
@@ -54,16 +63,16 @@ function benchmark(subs, sel)
         -- fetch frame beforehand to cache
         local frame = aegisub.get_frame(frame_number, false)
         -- actually time subtitle drawing
-        local x = os.clock()
+        local timer = preciseTimer()
         for run = 1, precision,1 do
             frame = aegisub.get_frame(frame_number, true)
         end
-        local y = os.clock()
+        local time_elapsed = timer:timeElapsed()
         -- Keep memory consumption under control
         frame = nil
         collectgarbage()
         -- save time
-        local frame_time = (y - x) * 1000 / precision
+        local frame_time = time_elapsed * 1000 / precision
         frame_times[frame_number - start_frame + 1] = frame_time
     end
     
