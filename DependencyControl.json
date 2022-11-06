@@ -29,7 +29,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.1.0",
-                    "released": "2022-11-05",
+                    "released": "2022-11-06",
                     "files": [
                         {
                             "name": ".lua",
@@ -87,7 +87,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.0.0",
-                    "released": "2022-11-05",
+                    "released": "2022-11-06",
                     "files": [
                         {
                             "name": ".lua",
@@ -126,7 +126,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.1.2",
-                    "released": "2022-11-05",
+                    "released": "2022-11-06",
                     "files": [
                         {
                             "name": ".lua",
@@ -162,13 +162,13 @@
             "channels": {
                 "dev": {
                     "default": false,
-                    "version": "0.0.2",
-                    "released": "2022-11-05",
+                    "version": "0.0.3",
+                    "released": "2022-11-06",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.benchmark@{fileName}",
-                            "sha1": "fbfb943b3b4d2ba0655461d6b0ee7c3915519cf1"
+                            "sha1": "7cd3a1e04d241da4793ab90ccec63c43cc0ad6bf"
                         }
                     ]
                 },
@@ -219,7 +219,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.0.1",
-                    "released": "2022-11-05",
+                    "released": "2022-11-06",
                     "files": [
                         {
                             "name": ".lua",
