@@ -1,11 +1,11 @@
 script_name = "QuickGradient"
 script_description = "Applies vertical gradient based on 1c and 2c"
-script_version = '1.1.0'
+script_version = '1.1.1'
 script_author = "sepro"
 script_namespace = "sepro.gradient"
 
 local haveDepCtrl, DependencyControl, depCtrl = pcall(require, "l0.DependencyControl")
-local SubInspector, haveSubInsp, advancedStyles, color
+local SubInspector, haveSubInsp, color
 if haveDepCtrl then
     depCtrl = DependencyControl {
         feed = "https://raw.githubusercontent.com/seproDev/sepros-aegisub-scripts/main/DependencyControl.json",
@@ -23,7 +23,6 @@ if haveDepCtrl then
     }
     SubInspector, color = depCtrl:requireModules()
     haveSubInsp = true
-    advancedStyles = depCtrl:getConfigHandler({}, "advancedStyles")
 else
     haveSubInsp, SubInspector = pcall(require, "SubInspector.Inspector")
     color = require("sepro.color")
