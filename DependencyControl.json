@@ -28,13 +28,13 @@
                 },
                 "dev": {
                     "default": false,
-                    "version": "1.1.0",
-                    "released": "2022-11-06",
+                    "version": "1.1.1",
+                    "released": "2022-11-26",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.gradient@{fileName}",
-                            "sha1": "a6987b17b6d4dd4c25c4809cd827460ffd2cbc88"
+                            "sha1": "135d40d81e955cd754d0a3cc5a425877184ec4a6"
                         }
                     ]
                 }
@@ -87,7 +87,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.0.0",
-                    "released": "2022-11-06",
+                    "released": "2022-11-26",
                     "files": [
                         {
                             "name": ".lua",
@@ -126,7 +126,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.1.2",
-                    "released": "2022-11-06",
+                    "released": "2022-11-26",
                     "files": [
                         {
                             "name": ".lua",
@@ -163,7 +163,7 @@
                 "dev": {
                     "default": false,
                     "version": "0.0.3",
-                    "released": "2022-11-06",
+                    "released": "2022-11-26",
                     "files": [
                         {
                             "name": ".lua",
@@ -222,7 +222,7 @@
                 "dev": {
                     "default": false,
                     "version": "1.0.1",
-                    "released": "2022-11-06",
+                    "released": "2022-11-26",
                     "files": [
                         {
                             "name": ".lua",
