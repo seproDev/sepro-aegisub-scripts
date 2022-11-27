@@ -16,13 +16,13 @@
             "channels": {
                 "main": {
                     "default": true,
-                    "version": "1.1.0",
-                    "released": "2022-08-06",
+                    "version": "1.1.1",
+                    "released": "2022-11-27",
                     "files": [
                         {
                             "name": ".lua",
                             "url": "@{fileBaseUrl}sepro.gradient@{fileName}",
-                            "sha1": "a6987b17b6d4dd4c25c4809cd827460ffd2cbc88"
+                            "sha1": "135d40d81e955cd754d0a3cc5a425877184ec4a6"
                         }
                     ]
                 },
@@ -48,6 +48,9 @@
                 ],
                 "1.1.0": [
                     "Added move supoprt"
+                ],
+                "1.1.1": [
+                    "Remove unnecessary code"
                 ]
             },
             "requiredModules": [
